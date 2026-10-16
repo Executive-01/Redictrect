@@ -3,97 +3,39 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video - SMKN 1 Ngawi</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Video</title>
   <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: #101827;
-      color: white;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    .container {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
       width: 100%;
-      max-width: 900px;
-      text-align: center;
-    }
-
-    h1 {
-      font-size: clamp(22px, 4vw, 34px);
-      margin-bottom: 10px;
-    }
-
-    p {
-      color: #cbd5e1;
-      margin-bottom: 24px;
-    }
-
-    .video-box {
+      height: 100%;
+      overflow: hidden;
       background: #000;
-      padding: 8px;
-      border-radius: 14px;
-      box-shadow: 0 10px 40px #0006;
     }
-
     video {
-      display: block;
       width: 100%;
-      max-height: 75vh;
-      border-radius: 8px;
+      height: 100%;
+      display: block;
+      object-fit: contain;
       background: #000;
-    }
-
-    #status {
-      margin-top: 18px;
-      font-size: 14px;
-      color: #93c5fd;
     }
   </style>
 </head>
-
 <body>
-  <main class="container">
-    <h1>Selamat Datang</h1>
-    <p>Silakan tonton video berikut sampai selesai.</p>
-
-    <div class="video-box">
-      <video id="video" controls playsinline preload="metadata">
-        <source src="video.mp4" type="video/mp4">
-        Browser Anda tidak mendukung pemutaran video.
-      </video>
-    </div>
-
-    <div id="status">Video akan membuka situs tujuan setelah selesai.</div>
-  </main>
+  <video id="v" autoplay muted playsinline>
+    <source src="video.mp4" type="video/mp4">
+  </video>
 
   <script>
-    const video = document.getElementById("video");
-    const status = document.getElementById("status");
-    let redirected = false;
+    const v = document.getElementById("v");
 
-    video.addEventListener("ended", function () {
-      if (redirected) return;
-
-      redirected = true;
-      status.textContent = "Video selesai. Membuka situs SMKN 1 Ngawi...";
-
-      window.location.href = "https://smkn1-ngw.sch.id/";
+    v.play().catch(() => {
+      // Jika autoplay diblokir, browser memerlukan interaksi pengguna.
     });
 
-    video.addEventListener("error", function () {
-      status.textContent =
-        "Video gagal dimuat. Periksa file video.mp4.";
+    v.addEventListener("ended", () => {
+      location.replace("https://smkn1-ngw.sch.id/");
     });
   </script>
 </body>
